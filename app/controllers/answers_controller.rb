@@ -17,22 +17,26 @@ class AnswersController < ApplicationController
   def new
     @answer = Answer.new
 
-    @answer.answer_1 = params[:answer_1]
-    @answer.answer_2 = params[:answer_2]
-    @answer.answer_3 = params[:answer_3]
-    @answer.answer_4 = params[:answer_4]
-    @answer.answer_5 = params[:answer_5]
+    if params[:answer_1].present?
+      @answer.answer_1 = params[:answer_1]
+      @answer.answer_2 = params[:answer_2]
+      @answer.answer_3 = params[:answer_3]
+      @answer.answer_4 = params[:answer_4]
+      @answer.answer_5 = params[:answer_5]
 
-    @answer.questionnaire_id = params[:questionnaire_id]
-    @answer.respondent_id = params[:respondent_id]
-    @answer.comment = params[:comment]
+      @answer.questionnaire_id = params[:questionnaire_id]
+      @answer.respondent_id = params[:respondent_id]
+      @answer.comment = params[:comment]
 
-    @score = (@answer.answer_1.to_f+@answer.answer_2.to_f+@answer.answer_3.to_f+@answer.answer_4.to_f+@answer.answer_5.to_f)/5
-
+      @score = (@answer.answer_1.to_f+@answer.answer_2.to_f+@answer.answer_3.to_f+@answer.answer_4.to_f+@answer.answer_5.to_f)/5
+    end
   end
 
   def create
     @answer = Answer.new
+    # if params[:answer_1].present?
+
+
     @answer.answer_1 = params[:answer_1]
     @answer.answer_2 = params[:answer_2]
     @answer.answer_3 = params[:answer_3]
@@ -44,6 +48,16 @@ class AnswersController < ApplicationController
     @answer.comment = params[:comment]
 
     @score = (@answer.answer_1.to_f+@answer.answer_2.to_f+@answer.answer_3.to_f+@answer.answer_4.to_f+@answer.answer_5.to_f)/5
+
+    did_it_save = @answer.save
+
+    if did_it_save
+
+    else
+      redirect_to '/answers/new', :notice => "Please provide a numerical value for each answer"
+    # else
+    #     redirect_to '/answers/new', :notice => "Please provide a numerical value for each answer"
+    end
 
 
   end

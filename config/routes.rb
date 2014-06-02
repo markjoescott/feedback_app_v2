@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   # Routes for the Questionnaire resource:
+
   # CREATE
+
+  root 'answers#new'
+
   get('/questionnaires/new', { :controller => 'questionnaires', :action => 'new' })
   get('/create_questionnaire', { :controller => 'questionnaires', :action => 'create' })
 
